@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DIALOG page="login" title="TLogin">
+
+	<STRING name="name" />
+	<STRING name="pass" />
+
+
+	<ACTION name="anmelden" class="org.janus.gui.login.UnsecureLoginAction"
+		nameVar="name" passwordVar="pass" />
+	
+	<ACTION name="wechseln" class="org.janus.gui.page.ChangePageAction"
+		pagename="data" />
+	
+	<ACTION name="anmeldenUndwechseln" actions="anmelden,wechseln" />
+	
+	<GUI>
+
+		<VBOX>
+			<LABEL text="Login" />
+
+			<HBOX>
+				<LABEL text="Name" />
+				<TEXTFIELD name="name" />
+			</HBOX>
+			<HBOX>
+				<LABEL text="Passwort" />
+				<TEXTFIELD name="pass" />
+
+			</HBOX>
+			<BUTTON name="anmeldenUndwechseln" text="Anmelden" />
+
+		</VBOX>
+
+	</GUI>
+</DIALOG>

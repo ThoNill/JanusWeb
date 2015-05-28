@@ -1,0 +1,67 @@
+.nombp {
+	height: 2.1em;
+	margin: 0em;
+	border: 0em;
+	padding: 0em;
+	display: block;
+}
+
+.chbox {
+	float: left
+}
+
+.b1title {
+	font-size: 0.6em; #
+	height: 1.4em;
+	margin: 0.1em 0.1em 0.1em 0.2em;
+	border: 0em;
+	padding: 0em;
+	display: block;
+}
+
+input.b1body {
+	font-size: 0.8em; #
+	height: 1.4em;
+	margin: 0em 0.1em 0em 0.1em;
+	border-size: 0.1em;
+	border-style: solid;
+	border-color: black;
+	padding: 0em;
+	display: block;
+}
+
+button.b1body {
+	font-size: 0.8em;
+	height: 1.6em;
+	display: block;
+}
+
+select.b1body {
+	font-size: 0.8em;
+	height: 1.6em;
+	display: block;
+}
+
+div.b1body {
+	font-size: 0.8em; #
+	height: 1.4em;
+	margin: 0.1em 0.1em 0em 0.1em;
+	border: 0em;
+	padding: 0em;
+	display: block;
+}
+
+.b2body {
+	font-size: 0.8em; #
+	height: 1.4em;
+	margin: 1.1em 0.1em 0em 0.1em;
+	border: 0em;
+	padding: 0em;
+	display: block;
+}
+
+div:hover {
+	border-size: 0.1em;
+	border-style: solid;
+	border-color: black;
+}
