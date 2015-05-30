@@ -86,7 +86,7 @@ CHECK(it) ::= <<
 
 BUTTON(it) ::= <<
 <form  $it:formid()$ action="">
-<button $it:id()$ $it:classStyle()$ class='yui3-button success b2body'  name="$it.IdRef$" value="" >$it.Label$</button>
+<button $it:id()$ $it:classStyle()$ class='yui3-button success b2body'  name="$it.IdRef$" value="1" >$it.Label$</button>
 </form>
 >>
 

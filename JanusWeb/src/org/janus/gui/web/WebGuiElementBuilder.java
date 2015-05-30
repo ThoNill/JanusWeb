@@ -5,32 +5,42 @@ import janus.tech.web.html.GuiComponentVerwalter;
 import org.janus.actions.Action;
 import org.janus.dict.actions.ActionDictionary;
 import org.janus.dict.actions.NamedActionValue;
+import org.janus.gui.basis.Attribut2GuiComponent;
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusPage;
 import org.janus.gui.builder.GuiElementBuilder;
+import org.janus.gui.enums.GuiField;
 import org.janus.gui.enums.GuiType;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 public class WebGuiElementBuilder implements GuiElementBuilder {
-	
-	
-	
 
 	public WebGuiElementBuilder() {
 		super();
 	}
 
 	@Override
-	public GuiComponent createGuiElement(Element elem, Action a,ActionDictionary dict) {
-		PrototypeGuiComponent comp = createGuiElementIntern(elem, a,dict);
+	public GuiComponent createGuiElement(Element elem, Action a,
+			ActionDictionary dict) {
+		PrototypeGuiComponent comp = createGuiElementIntern(elem, a, dict);
 		String actionName = elem.getAttributeValue("name");
 		if (actionName != null) {
 			NamedActionValue value = dict.getAction(actionName);
 			comp.setValue(value);
 			GuiComponentVerwalter.getVerwalter().add(comp);
 		}
-		
-		switch(comp.getGuiType()) {
+		comp.setHeight(1.0f);
+		comp.setWidth(10.0f);
+		for (Attribute attr : elem.getAttributes()) {
+			try {
+				GuiField field = GuiField.valueOf(attr.getName().toUpperCase());
+				Attribut2GuiComponent.setField(comp, field, attr.getValue());
+			} catch (Exception ex) {
+
+			}
+		}
+		switch (comp.getGuiType()) {
 		case BUTTON:
 			comp.setLength(1);
 			comp.setPattern("^1$");
@@ -79,14 +89,15 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 			break;
 		default:
 			break;
-		
+
 		}
 		return comp;
 	}
 
-	private PrototypeGuiComponent createGuiElementIntern(Element elem, Action a,ActionDictionary dict) {
+	private PrototypeGuiComponent createGuiElementIntern(Element elem,
+			Action a, ActionDictionary dict) {
 		GuiType type = GuiType.valueOf(elem.getName());
-		return new PrototypeGuiComponent(type, (JanusPage)dict);
+		return new PrototypeGuiComponent(type, (JanusPage) dict);
 	}
 
 }

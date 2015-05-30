@@ -49,13 +49,27 @@
 			<artifactId>jtidy</artifactId>
 			<version>4aug2000r7-dev</version>
 		</dependency>
+		<!-- <dependency> <groupId>org.glassfish.main.extras</groupId> <artifactId>glassfish-embedded-all</artifactId> 
+			<version>4.1</version> <scope>test</scope> </dependency> -->
 
 		<dependency>
-			<groupId>org.glassfish.main.extras</groupId>
-			<artifactId>glassfish-embedded-all</artifactId>
-			<version>4.1</version>
-			<scope>test</scope>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>9.3.0.M2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>9.3.0.M2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+			<version>9.3.0.M2</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>javax</groupId>

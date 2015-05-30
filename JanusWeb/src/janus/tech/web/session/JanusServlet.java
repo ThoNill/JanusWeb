@@ -181,7 +181,7 @@ public class JanusServlet extends HttpServlet {
 
 	public PrototypeGuiComponent getGuiComponent(HttpServletRequest request,
 			String parameterName) {
-		int actionId = Integer.parseInt(parameterName.substring(3));
+		int actionId = Integer.parseInt(parameterName.substring(1));
 		return GuiComponentVerwalter.getVerwalter().getComponent(actionId);
 	}
 

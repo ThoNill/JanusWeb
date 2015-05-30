@@ -55,12 +55,12 @@ public class WebServletTest implements HTMLParserListener{
 			listDivs(doc,"BUTTON");
 			
 			request = new PostMethodWebRequest(
-					"http://localhost/test?DIV10=thomas");
+					"http://localhost/test?v10=thomas");
 			
 			response = sc.getResponse(request);
 						
 			request = new PostMethodWebRequest(
-					"http://localhost/test?DIV14=1");
+					"http://localhost/test?v14=1");
 			
 			response = sc.getResponse(request);
 			
