@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.janus.actions.ReadValue;
 import org.janus.actions.WriteValue;
 import org.janus.data.DataContext;
@@ -16,6 +17,7 @@ import org.janus.dict.actions.NamedActionValue;
 import org.janus.dict.helper.ID;
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusPage;
+import org.janus.gui.basis.RootGuiComponent;
 import org.janus.gui.enums.GuiField;
 import org.janus.gui.enums.GuiType;
 
@@ -357,4 +359,6 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 	protected void setLength(int length) {
 		this.length = length;
 	}
+
+
 }

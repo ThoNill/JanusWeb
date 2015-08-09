@@ -97,6 +97,9 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 	private PrototypeGuiComponent createGuiElementIntern(Element elem,
 			Action a, ActionDictionary dict) {
 		GuiType type = GuiType.valueOf(elem.getName());
+		if (type.equals(GuiType.GUI)) {
+			return new RootPrototypeGuiComponent(type, (JanusPage) dict);
+		}
 		return new PrototypeGuiComponent(type, (JanusPage) dict);
 	}
 
