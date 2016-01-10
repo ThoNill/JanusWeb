@@ -107,7 +107,19 @@
 	<build>
 		<defaultGoal>clean install</defaultGoal>
 		<sourceDirectory>src</sourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
 		<testSourceDirectory>test</testSourceDirectory>
+
+
 		<testResources>
 			<testResource>
 				<directory>test</directory>

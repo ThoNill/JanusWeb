@@ -17,7 +17,6 @@ import org.janus.dict.actions.NamedActionValue;
 import org.janus.dict.helper.ID;
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusPage;
-import org.janus.gui.basis.RootGuiComponent;
 import org.janus.gui.enums.GuiField;
 import org.janus.gui.enums.GuiType;
 

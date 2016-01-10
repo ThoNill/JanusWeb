@@ -1,20 +1,12 @@
 package web;
 
-import java.io.PrintWriter;
-
 import janus.tech.wcomponents.FromPrototypToTemplateComponents;
 import janus.tech.wcomponents.TemplateGuiComponent;
 import janus.tech.web.session.HtmlSession;
-
-import javax.swing.JFrame;
-
 import org.janus.appbuilder.AppBuilder;
 import org.janus.gui.basis.JanusApplication;
 import org.janus.gui.basis.JanusPage;
-import org.janus.gui.basis.JanusSession;
 import org.janus.gui.builder.GuiElementBuilder;
-import org.janus.gui.swing.JFrameConnector;
-import org.janus.gui.swing.builder.DefaultGuiElementBuilder;
 import org.janus.gui.web.PrototypeGuiComponent;
 import org.janus.gui.web.WebGuiContext;
 import org.janus.gui.web.WebGuiElementBuilder;

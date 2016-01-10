@@ -10,7 +10,6 @@ import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusApplication;
 import org.janus.gui.basis.JanusPage;
 import org.janus.gui.basis.JanusSession;
-import org.janus.gui.enums.GuiType;
 import org.janus.gui.web.PrototypeGuiComponent;
 import org.janus.gui.web.WebGuiContext;
 
@@ -118,7 +117,7 @@ public class HtmlSession extends JanusSession {
 	
 	public WFrame getFrame(JanusPage page) {
 		if (frames[page.getIndex()] == null) {
-			GuiComponent gui = (GuiComponent) page.getGui();
+			GuiComponent gui = page.getGui();
 			if (gui != null) {
 				WebGuiContext context = (WebGuiContext)getPageContext(page);
 				frames[page.getIndex()] = createFrame( context,(PrototypeGuiComponent)gui);

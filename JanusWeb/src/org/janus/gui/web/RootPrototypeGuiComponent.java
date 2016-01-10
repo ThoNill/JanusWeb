@@ -1,11 +1,6 @@
 package org.janus.gui.web;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Vector;
-
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusPage;
 import org.janus.gui.basis.RootGuiComponent;
