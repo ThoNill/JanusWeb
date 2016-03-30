@@ -83,7 +83,6 @@ public class TemplateGuiComponent extends DefaultGuiComponent {
 			return t.toString();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			System.out.println(ex.getMessage());
 		}
 		return "";
 	}

@@ -96,10 +96,10 @@ TEXTFIELD(it) ::= <<
 </form>
 >>
 
-tableColumn(it) ::= << { key: "column$i0$", label: "$it.Header$" } >>
+tableColumn(it) ::= << { key: "$it.Name$", label: "$it.Header$" } >>
 
 SHOWTABLE(it) ::= <<
-<!--  $it.ActionDescription$ -->
+<!--  Table  -->
 <div $it:id()$ class="yui3-skin-sam" $it:classStyle()$ >$it.Label$</DIV>
 >>
 
@@ -121,27 +121,12 @@ TABS(it) ::= <<
       $it.Children:tabitem()$
     </div>
 </div>
-<SCRIPT>
-YUI().use('node','node-core', 'event','event-mouseenter', 'button','node-menunav','tabview',"console", "datasource","datasource-io", 
-"datasource-jsonschema","console-filters", 'datatable',"dd-plugin",  function (Y) {
 
-
-
- var tabview$it.Id$ = new Y.TabView({
-        srcNode: "#DIV$it.Id$"
-    });
-
-    tabview$it.Id$.render();
-
-$jsChildren()$ 
-
-});
-</SCRIPT>
 >>               
 
 menuitem(it) ::= <<
 <li class="yui3-menuitem">
-	<a class="yui3-menu-label" href="http://localhost:8080/janus6/janus?$it.IdRef$">$it.Label$</a>
+	<a class="yui3-menu-label" href="http://localhost:8082/janus6/janus?$it.IdRef$">$it.Label$</a>
 </li>
 >>
 
@@ -180,25 +165,40 @@ skriptGUI(it) ::= <<
 var Y = YUI( {
 	modules : {
 		myjs : {
-		 	fullpath : 'http://localhost:8080/janus6/js/yui_nill.js',
+		 	fullpath : 'http://localhost:8082/janus6/js/yui_nill.js',
 		}
 	}
 });
-
 
 Y.use('node', 'event', 'button','dom','node-menunav','tabview',"console", "datasource","datasource-io", 
 "datasource-jsonschema","console-filters", 'datatable','dd-plugin',  function (Y) {
 Y.use("myjs", function (Y) {
 
-setterHash = {};
-setterHash["#DIV$it.Id$"] = setterGUI;   
+try {
 
- var menu = Y.one("#hauptmenu");
- menu.plug(Y.Plugin.NodeMenuNav);
+Y.log("start der Seitenverbindung", '#info');
+
+// setterHash = {};
+addToSetterHash("#DIV$it.Id$",setterGUI);   
+
+// TODO Nur wenn ein Menue da ist
+// var menu = Y.one("#hauptmenu");
+// menu.plug(Y.Plugin.NodeMenuNav);
+   
+   Y.log("vor dem Verbindern der Kinder", '#info');   
    
    $jsChildren()$
+   
+   Y.log("Ende der Seitenverbindung", '#info');
+} catch(err) {
+    Y.log(err.message, '#info');
+}
+
 }); 
 });
+
+
+Y.log("Ende der Sandbox", '#info');
 </script>
 >>
 
@@ -212,17 +212,16 @@ GUI(it) ::= <<
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.6.0/build/cssfonts/fonts-min.css" type="text/css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.6.0/build/cssbase/base-min.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.6.0/build/cssgrids/grids-min.css">
-    <link rel="stylesheet" href="http://localhost:8080/janus6/js/tabelle.css" type="text/css">
+    <link rel="stylesheet" href="http://localhost:8082/janus6/js/tabelle.css" type="text/css">
     
  
     
  <script type="text/javascript" src="http://yui.yahooapis.com/3.13.0/build/yui/yui-debug.js"></script>
 
-$it:skriptGUI()$
 
 <title>$it.label$</title>
 
-<!--link rel="stylesheet" type="text/css" href="http://localhost:8080/janus6/js/default.css" /--> 
+<!--link rel="stylesheet" type="text/css" href="http://localhost:8086/janus6/js/default.css" /--> 
 
 </head>
 <body $it:id()$ class="yui3-skin-sam"  style="display:table" >
@@ -233,13 +232,46 @@ $it:menubar()$
 
 $it:htmlChildren()$
 </body>
+$it:skriptGUI()$
 </html>
 
 >>
 
-JsTAB(it) ::= << $jsChildren()$ >>
+JsTAB(it) ::= << 
 
-JsTABS(it) ::= << >>
+$jsChildren()$ 
+
+>>
+
+JsTABS(it) ::= <<
+
+
+tabview$it.Id$ = new Y.TabView({
+        srcNode: "#DIV$it.Id$"
+    });
+tabview$it.Id$.render();
+
+addToSetterHash2("#DIV$it.Id$",setterTABS,tabview$it.Id$);
+
+// Step 2. Subscribe to its click event with a callback function
+var send$it.Id$ = function (e) {
+                    e.preventDefault(); 
+                    
+                    var sel = tabview$it.Id$.get('activeDescendant');
+   					var index= tabview$it.Id$.indexOf(sel);
+                    datenSenden("$it.IdRef$",index);
+                    Y.log("value " +index, '#info');   
+                    };
+
+tabview$it.Id$.after('selectionChange',send$it.Id$);
+
+Y.log("Ende Verbinde TABS ", '#info');   
+
+
+$jsChildren()$ 
+
+
+ >>
 
 JsHBOX(it) ::= << $jsChildren()$ >>
 
@@ -247,12 +279,15 @@ JsVBOX(it) ::= <<$jsChildren()$>>
 
 JsRADIO(it) ::= << 
 
+Y.log("Verbinde RADIO", '#info');   
 
 var g$it.Id$ = Y.one("#DIV$it.Id$");
 var f$it.Id$ = Y.one("#FORM$it.Id$");
 
+
 // Step 2. Subscribe to its click event with a callback function
 var send$it.Id$ = function (e) {
+Y.log("RADIO", '#info');
                     e.preventDefault(); 
                     var value = e.target.get("value");
                     datenSenden("$it.IdRef$",value);
@@ -261,10 +296,13 @@ var send$it.Id$ = function (e) {
 f$it.Id$.on("submit", send$it.Id$);   
 g$it.Id$.delegate('click',send$it.Id$,'input');
 
-setterHash["#DIV$it.Id$"] = setterRADIO;
+addToSetterHash("#DIV$it.Id$", setterRADIO);
 >>
 
 JsCHECK(it) ::= << 
+
+Y.log("Verbinde CHECK", '#info');   
+
 var g$it.Id$ = Y.one("#DIV$it.Id$");
 var f$it.Id$ = Y.one("#FORM$it.Id$");
 
@@ -297,11 +335,12 @@ var click$it.Id$ = function (e) {
 g$it.Id$.on("change", click$it.Id$);
 f$it.Id$.on("submit", send$it.Id$);   
 
-setterHash["#DIV$it.Id$"] = setterCHECK;
+addToSetterHash("#DIV$it.Id$",setterCHECK);
 >>
 
 JsCOMBO(it) ::= << 
 
+Y.log("Verbinde COMBO", '#info');   
 
 var g$it.Id$ = Y.one("#DIV$it.Id$");
 var f$it.Id$ = Y.one("#FORM$it.Id$");
@@ -311,11 +350,12 @@ var send$it.Id$ = function (e) {e.preventDefault();  datenSenden("$it.IdRef$",g$
 g$it.Id$.on("click", send$it.Id$);
 f$it.Id$.on("submit", send$it.Id$);   
 
-setterHash["#DIV$it.Id$"] = setterLIST;
+addToSetterHash("#DIV$it.Id$",setterLIST);
 >>
 
 JsLIST(it) ::= << 
 
+Y.log("Verbinde LIST", '#info');   
 
 var g$it.Id$ = Y.one("#DIV$it.Id$");
 var f$it.Id$ = Y.one("#FORM$it.Id$");
@@ -325,22 +365,26 @@ var send$it.Id$ = function (e) {e.preventDefault();  datenSenden("$it.IdRef$",g$
 g$it.Id$.on("click", send$it.Id$);
 f$it.Id$.on("submit", send$it.Id$);   
 
-setterHash["#DIV$it.Id$"] = setterLIST;
+addToSetterHash("#DIV$it.Id$",setterLIST);
 >>
 
 JsBUTTON(it) ::= <<
+
+Y.log("Verbinde BUTTON", '#info');   
 
 var g$it.Id$ = Y.one("#DIV$it.Id$");
 var f$it.Id$ = Y.one("#FORM$it.Id$");
 
 // Step 2. Subscribe to its click event with a callback function
-var send$it.Id$ = function (e) {e.preventDefault();  datenSenden("$it.IdRef$","")};
+var send$it.Id$ = function (e) {e.preventDefault(); window.location.href = "http://localhost:8082/test?$it.IdRef$=1";}; // datenSenden("$it.IdRef$","1");};
 g$it.Id$.on("click", send$it.Id$);
 f$it.Id$.on("submit", send$it.Id$);     
-setterHash["#DIV$it.Id$"] = setterLABEL;
+addToSetterHash("#DIV$it.Id$",setterBUTTON);
 >>
 
 JsTEXTFIELD(it) ::= <<
+
+Y.log("Verbinde TEXTFIELD", '#info');   
 
 var g$it.Id$ = Y.one("#DIV$it.Id$");
 var f$it.Id$ = Y.one("#FORM$it.Id$");
@@ -353,16 +397,21 @@ f$it.Id$.on("submit", send$it.Id$);
 >>
 
 JsLABEL(it) ::= << 
-setterHash["#DIV$it.Id$"] = setterLABEL;
+
+Y.log("Verbinde LABEL", '#info');   
+
+addToSetterHash("#DIV$it.Id$", setterLABEL);
 >>
 
 JsSHOWTABLE(it) ::= <<
 
-var data$it.Id$ = [];
+Y.log("Verbinde SHOWTABLE", '#info');   
+
+var data$it.Id$ = $it.TableData$;
 
 
 var table$it.Id$ = new Y.DataTable({
-    columns: [ "zeilennr" ,
+    columns: [ { key: "zeilennr", label: "Zeile" },
     $it.TableColumnDescriptions:tableColumn(); separator=", "$
     ],
     data: data$it.Id$,
@@ -375,9 +424,9 @@ var table$it.Id$ = new Y.DataTable({
 });
 
 
-setterHash["#DIV$it.Id$"] = function (node, prop, value) {
+addToSetterHash("#DIV$it.Id$", function (node, prop, value) {
                                 setterSHOWTABLE(node, prop, value,table$it.Id$);
-                             };
+                             });
                       
 
 

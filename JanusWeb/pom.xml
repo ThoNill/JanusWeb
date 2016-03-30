@@ -4,6 +4,11 @@
 	<groupId>thomas.nill</groupId>
 	<artifactId>JanusWeb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<properties>
+		<jetty.plugin.version>9.3.7.v20160115</jetty.plugin.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -71,10 +76,10 @@
 
 
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-			<scope>compile</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -105,7 +110,7 @@
 	</dependencies>
 
 	<build>
-		<defaultGoal>clean install</defaultGoal>
+		<defaultGoal>jetty:run</defaultGoal>
 		<sourceDirectory>src</sourceDirectory>
 
 		<resources>
@@ -152,6 +157,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+		
 		</plugins>
 	</build>
 </project>

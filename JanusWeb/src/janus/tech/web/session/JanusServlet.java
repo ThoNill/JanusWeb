@@ -19,6 +19,7 @@ import org.janus.gui.basis.JanusPage;
 import org.janus.gui.basis.JanusSession;
 import org.janus.gui.basis.PageContext;
 import org.janus.gui.web.PrototypeGuiComponent;
+import org.janus.gui.web.WebGuiContext;
 import org.janus.gui.web.WebGuiElementBuilder;
 
 public class JanusServlet extends HttpServlet {
@@ -81,9 +82,7 @@ public class JanusServlet extends HttpServlet {
 				respondToMessage(request, response, session, ajax);
 
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				System.out.println(e1.getMessage());
 			}
 			session.setInactive();
 		}
@@ -128,11 +127,18 @@ public class JanusServlet extends HttpServlet {
 	private void createAjaxResult(HttpServletResponse response,
 			HtmlSession session) throws IOException {
 		response.setContentType("application/json; charset=UTF-8");
+		
+		WebGuiContext context = session.getWebGuiContext();
 		AjaxHelper h = new AjaxHelper();
-		// PrintWriter w = new PrintWriter(System.out);
-		PrintWriter w = response.getWriter();
+		PrintWriter w = new PrintWriter(System.out);
 		h.createOutput(session, w);
 		w.flush();
+		
+		w = response.getWriter();
+		h.createOutput(session, w);
+		w.flush();
+		
+		context.clearChangeLog();
 	}
 
 	private boolean checkAllParameterValues(HttpServletRequest request) {
@@ -142,7 +148,6 @@ public class JanusServlet extends HttpServlet {
 			while (ok && parameterNames.hasMoreElements()) {
 				String parameterName = parameterNames.nextElement();
 				ok = ok && checkParameterValue(request, parameterName);
-				System.out.println("Test von " + parameterName + " ist " + ok);
 			}
 		}
 		return ok;
@@ -188,6 +193,7 @@ public class JanusServlet extends HttpServlet {
 			String parameterName) {
 		if (!istspeziell(parameterName)) {
 			String parameterValue = request.getParameter(parameterName);
+			
 			PrototypeGuiComponent connector = getGuiComponent(request,
 					parameterName);
 			return (connector == null) ? false : connector

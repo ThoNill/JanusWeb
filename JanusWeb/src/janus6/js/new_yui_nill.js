@@ -36,7 +36,7 @@ infomsg = function(text) {
 infomsg("logger ok");
 
 myDataSource = new Y.DataSource.IO( {
-	source : "http://localhost:8080/janus6/janus?ajax=true"
+	source : "http://localhost:8082/janus6/janus?ajax=true"
 }), myCallback = {
 	success : function(e) {
 		allePropChangeEventsAbarbeiten(e.response.results);

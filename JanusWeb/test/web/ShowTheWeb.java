@@ -40,7 +40,7 @@ class Browser extends Region {
         getStyleClass().add("browser");
         // load the web page
       //  webEngine.load("http://www.google.com");
-        webEngine.load("http://localhost:8080/test");
+        webEngine.load("http://localhost:8082/test");
         //add the web view to the scene
         getChildren().add(browser);
  

@@ -21,6 +21,7 @@ public class WebGuiContext extends PageContext implements Serializable{
 
 
 	public void add(ChangeOfGuiElement change) {
+		System.out.println("change: " + change);
 		guiChanges.add(change);
 	}
 

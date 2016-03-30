@@ -2,17 +2,24 @@ package janus.tech.wcomponents;
 
 import janus.tech.web.html.TableModelIterator;
 
+
+
+
+
+import janus.tech.web.session.AjaxHelper;
+
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.List;
 
-import org.janus.actions.DataValue;
 import org.janus.gui.basis.TableColumnDescription;
-import org.janus.gui.basis.TableGuiComponent;
 import org.janus.gui.web.PrototypeGuiComponent;
 import org.janus.gui.web.WebGuiContext;
 import org.janus.table.ExtendedTableModel;
 
-public class WTable extends TemplateGuiComponent implements TableGuiComponent {
+public class WTable extends TemplateGuiComponent {
 
 
 	private int currentRow;
@@ -26,28 +33,28 @@ public class WTable extends TemplateGuiComponent implements TableGuiComponent {
 		super(context, prototyp);
 	}
 	
-	@Override
-	public DataValue getCurrentRowValue() {
-		return ((TableGuiComponent) getPrototyp()).getCurrentRowValue();
-	}
 
-	@Override
 	public int getCurrentRow() {
-		return currentRow;
+		return getTableModel().getCurrentRow();
 	}
 
-	@Override
+
 	public void setCurrentRow(int currentRow) {
-		this.currentRow = currentRow;
+		getTableModel().setCurrentRow(currentRow);
+	}
+	
+	
+	private PrototypeGuiComponent getTableGui() {
+		return super.getPrototyp();
 	}
 
 	
 	public TableModelIterator getItemIterator() {
-		return new TableModelIterator((ExtendedTableModel)getGuiValue());
+		return new TableModelIterator(getTableModel());
 	}
 	
 	public int getRowCount() {
-	 return ((ExtendedTableModel)getGuiValue()).getRowCount();
+	 return getTableModel().getRowCount();
 	}
 	
 	 @Override
@@ -62,8 +69,21 @@ public class WTable extends TemplateGuiComponent implements TableGuiComponent {
 		 }
 	 }
 
-	@Override
-	public List<TableColumnDescription> getDescriptions() {
-		return ((TableGuiComponent)getPrototyp()).getDescriptions();
+	public List<TableColumnDescription> getTableColumnDescriptions() {
+		return getTableGui().getDescriptions();
+	}
+	
+	private ExtendedTableModel getTableModel() {
+		return (ExtendedTableModel)getGuiValue();
+	}
+	
+	public String getTableData() {
+		OutputStream out = new ByteArrayOutputStream();
+		PrintWriter w = new PrintWriter(out);
+		AjaxHelper h = new AjaxHelper();
+		ExtendedTableModel m = getTableModel();
+		h.printTableData(w, m,m.getRowCount(),m.getColumnCount());
+		w.close();
+		return out.toString();
 	}
 }

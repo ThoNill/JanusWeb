@@ -35,11 +35,8 @@ public class JavaFont2HTMLFont {
 
 		for (String fontName : fontNames) {
 			Font f = new Font(fontName, Font.PLAIN, 12);
-			System.out.println(transform(f));
 			f = new Font(fontName, Font.BOLD, 12);
-			System.out.println(transform(f));
 			f = new Font(fontName, Font.ITALIC, 12);
-			System.out.println(transform(f));
 		}
 	}
 }

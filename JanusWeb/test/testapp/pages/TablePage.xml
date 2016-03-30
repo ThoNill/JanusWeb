@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DIALOG 	page="TablePage" title="Test" >
+
+
+
+	<MAPTABLE name="tabelle">
+	    <ENTRY value="0" text="Null" />
+		<ENTRY value="1" text="eins" />
+		<ENTRY value="2" text="zwei" />
+		<ENTRY value="3" text="drei" />
+		<ENTRY value="4" text="vier" />
+	</MAPTABLE>
+
+
+
+	<GUI>
+
+		<VBOX  >
+
+			<LABEL text="Test" />
+			
+			<TEXTFIELD name="tabelle.value"   />
+			<LIST name="tabelle" />
+			<COMBO name="tabelle" />
+			<RADIO name="tabelle" />
+			 
+			<SHOWTABLE name="tabelle">
+				<COLUMN name="text" header="Text" />
+			</SHOWTABLE>
+			
+			<HBOX />
+			
+			<TABS name="tabelle.value" >
+			    <TAB name="Null" background="red">
+			        
+			    </TAB>
+			    <TAB name="Eins" background="green">
+			        
+			    </TAB>
+			     <TAB name="Zwei" background="blue">
+			        
+			    </TAB>
+			     <TAB name="Drei" background="yellow">
+			        
+			    </TAB>
+			     <TAB name="Vier" background="margenta">
+			        
+			    </TAB>
+			</TABS>
+		</VBOX>
+
+	</GUI>
+
+</DIALOG>

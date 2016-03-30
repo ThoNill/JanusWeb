@@ -15,21 +15,26 @@ import org.janus.actions.WriteValue;
 import org.janus.data.DataContext;
 import org.janus.dict.actions.NamedActionValue;
 import org.janus.dict.helper.ID;
+import org.janus.dict.interfaces.ActionListener;
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusPage;
+import org.janus.gui.basis.TableColumnDescription;
 import org.janus.gui.enums.GuiField;
 import org.janus.gui.enums.GuiType;
+import org.janus.table.ExtendedTableModel;
+import org.janus.table.SelectRowHint;
 
 /**
- * Dieses GUI Objekt speichert die Defaultwerte eder Propertie, die von XML Attributen
- * festgelegt werden und nicht mehr geändert werden. Diese Prototypen können von
- * verschiedenen Sessions gemeinsam genutzt werden.
+ * Dieses GUI Objekt speichert die Defaultwerte eder Propertie, die von XML
+ * Attributen festgelegt werden und nicht mehr geändert werden. Diese Prototypen
+ * können von verschiedenen Sessions gemeinsam genutzt werden.
  * 
  * @author THOMAS
  * 
  */
 
-public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadValue, WriteValue {
+public class PrototypeGuiComponent implements GuiComponent, Serializable,
+		ReadValue, WriteValue, ActionListener {
 
 	private Color foreground;
 	private Color background;
@@ -47,28 +52,26 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 	private Serializable guiValue;
 	private GuiType type;
 	private int id;
-	private HashMap<GuiField, ChangeKey> changeKeys = new HashMap<>(); 
+	private HashMap<GuiField, ChangeKey> changeKeys = new HashMap<>();
 	private Vector<GuiComponent> childComponents = null;
 	private NamedActionValue value;
 	private JanusPage page;
 	private Pattern pattern = null;
-	private int length=0;
-	
+	private int length = 0;
+	private Vector<TableColumnDescription> descriptions = new Vector<>();
 
-
-	
-	public PrototypeGuiComponent(GuiType type,JanusPage page) {
+	public PrototypeGuiComponent(GuiType type, JanusPage page) {
 		super();
 		this.type = type;
 		id = ID.getId();
 		changeKeys = new HashMap<GuiField, ChangeKey>();
 		this.page = page;
 	}
-	
+
 	public void setPattern(Pattern pattern) {
 		this.pattern = pattern;
 	}
-	
+
 	public void setPattern(String patternString) {
 		setPattern(Pattern.compile(patternString));
 	}
@@ -77,16 +80,14 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 	public int getId() {
 		return id;
 	}
-	
-	
+
 	public String getName() {
 		if (value != null) {
 			return value.getName() + id;
 		}
 		return null;
 	}
-	
-	
+
 	public synchronized ChangeKey getKey(GuiField field) {
 		ChangeKey key = changeKeys.get(field);
 		if (key == null) {
@@ -94,11 +95,7 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 			changeKeys.put(field, key);
 		}
 		return key;
-	}		
-	
-
-
-
+	}
 
 	@Override
 	public Font getFont() {
@@ -183,7 +180,6 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 		this.tooltip = tooltip;
 	}
 
-
 	@Override
 	public void validate() {
 	}
@@ -260,31 +256,40 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 	}
 
 	public Serializable getField(GuiField field) {
-		switch(field) {
-			case BACKGROUND : return background;
-			case FOREGROUND : return foreground;
-			case FONT : return font;
-			case ENABLED : return enabled;
-			case VISIBLE : return visible;
-			case FOCUS : return focus;
-			case LABEL : return label;
-			case STYLE : return style;
-			case TOOLTIP : return tooltip;
-			case WIDTH : return width;
-			case HEIGHT : return height;
-			case X : return x;
-			case Y : return y;
+		switch (field) {
+		case BACKGROUND:
+			return background;
+		case FOREGROUND:
+			return foreground;
+		case FONT:
+			return font;
+		case ENABLED:
+			return enabled;
+		case VISIBLE:
+			return visible;
+		case FOCUS:
+			return focus;
+		case LABEL:
+			return label;
+		case STYLE:
+			return style;
+		case TOOLTIP:
+			return tooltip;
+		case WIDTH:
+			return width;
+		case HEIGHT:
+			return height;
+		case X:
+			return x;
+		case Y:
+			return y;
 		}
 		return null;
 	}
 
-
-
-
-	
 	@Override
 	public void addComponent(GuiComponent comp) {
-		if (childComponents==null) {
+		if (childComponents == null) {
 			childComponents = new Vector<>();
 		}
 		childComponents.add(comp);
@@ -297,25 +302,30 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 		}
 		return childComponents;
 	}
-	
+
 	protected NamedActionValue getValue() {
 		return value;
 	}
 
 	protected void setValue(NamedActionValue value) {
+		if (this.value != null && value != this.value) {
+			this.value.removeActionListener(this);
+		}
 		this.value = value;
+		if (value != null) {
+			value.addActionListener(this);
+		}
 	}
-	
+
 	public void setGuiValue(DataContext context, Serializable v) {
 	}
-
-
-	
 
 	@Override
 	public void setObject(DataContext context, Serializable v) {
 		if (GuiType.BUTTON == type || GuiType.MENUITEM == type) {
 			value.perform(context);
+		} else if (isTable()) {
+			value.setObject(context,new SelectRowHint(v.toString()));
 		} else {
 			value.setObject(context,v);
 		}
@@ -327,23 +337,23 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 		return value.getObject(context);
 	}
 
-
 	public JanusPage getPage() {
 		return page;
 	}
-	
+
 	public boolean checkValue(String paramValue) {
-		
+
 		if (value instanceof WriteValue) {
 			if (paramValue == null || paramValue.length() > length)
 				return false;
 			return isPatternMatched(paramValue);
 		} else {
+			System.out.println("Kein Write Value");
 			return paramValue == null || "".equals(paramValue);
 		}
 
 	}
-	
+
 	protected boolean isPatternMatched(String paramValue) {
 		if (pattern == null)
 			return false;
@@ -357,6 +367,44 @@ public class PrototypeGuiComponent implements GuiComponent, Serializable, ReadVa
 
 	protected void setLength(int length) {
 		this.length = length;
+	}
+
+	@Override
+	public void actionPerformed(Object a, DataContext data) {
+		Serializable newValue = value.getObject(data);
+		ChangeKey ck = getKey(GuiField.VALUE);
+		if (isTable()) {
+			ck = getKey(GuiField.CURRENTROW);
+			if (newValue instanceof ExtendedTableModel) {
+				newValue = ((ExtendedTableModel)newValue).getCurrentRow();
+			}
+		}
+		WebGuiContext guiContext = (WebGuiContext)data;
+		Serializable oldValue = getValue(guiContext,ck);
+		ChangeOfGuiElement change = new ChangeOfGuiElement(ck, oldValue,newValue);
+		System.out.println("actionPerformed " + ck + ":" + oldValue + " " + newValue);
+		guiContext.add(change);
+	}
+
+	protected boolean isTable() {
+		return GuiType.COMBO == type || GuiType.LIST == type || GuiType.RADIO == type || GuiType.SHOWTABLE == type;
+	}
+	
+	
+	protected Serializable getValue(WebGuiContext guiContext ,ChangeKey ck) {
+		Serializable value = guiContext.getValue(ck);
+		if (value!= null) {
+			return value;
+		}
+		return "";
+	}
+	
+	public List<TableColumnDescription> getDescriptions() {
+		return descriptions;
+	}
+	
+	public void addDescriptions(TableColumnDescription d) {
+		descriptions.add(d);
 	}
 
 

@@ -38,7 +38,8 @@ public class HtmlSession extends JanusSession {
 
 	public void remove() {
 		if (httpSession != null) {
-			httpSession.removeAttribute(getSessionAttributName(getApplicaton()));
+			httpSession
+					.removeAttribute(getSessionAttributName(getApplicaton()));
 		}
 		this.httpSession = null;
 	}
@@ -109,24 +110,31 @@ public class HtmlSession extends JanusSession {
 		active = false;
 	}
 
-	
 	@Override
 	public WebGuiContext createDataContext(JanusPage page) {
 		return new WebGuiContext(page);
 	}
-	
+
 	public WFrame getFrame(JanusPage page) {
 		if (frames[page.getIndex()] == null) {
 			GuiComponent gui = page.getGui();
 			if (gui != null) {
-				WebGuiContext context = (WebGuiContext)getPageContext(page);
-				frames[page.getIndex()] = createFrame( context,(PrototypeGuiComponent)gui);
+				WebGuiContext context = (WebGuiContext) getPageContext(page);
+				frames[page.getIndex()] = createFrame(context,
+						(PrototypeGuiComponent) gui);
 			}
 		}
 		return frames[page.getIndex()];
 	}
 
 	private WFrame createFrame(WebGuiContext context, PrototypeGuiComponent gui) {
-		return (WFrame)FromPrototypToTemplateComponents.createTemplateElement(context,gui);
+		return (WFrame) FromPrototypToTemplateComponents.createTemplateElement(
+				context, gui);
+	}
+
+	public WebGuiContext getWebGuiContext() {
+		JanusApplication app = getApplicaton();
+		JanusPage currentPage = app.getPage(getCurrentPage());
+		return (WebGuiContext) currentPage.getContext(this);
 	}
 }

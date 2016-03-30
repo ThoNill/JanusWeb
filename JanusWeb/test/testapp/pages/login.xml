@@ -4,15 +4,26 @@
 	<STRING name="name" />
 	<STRING name="pass" />
 
+	<MAPTABLE name="tabelle">
+		<ENTRY value="0" text="Null" />
+		<ENTRY value="1" text="eins" />
+		<ENTRY value="2" text="zwei" />
+		<ENTRY value="3" text="drei" />
+		<ENTRY value="4" text="vier" />
+	</MAPTABLE>
 
 	<ACTION name="anmelden" class="org.janus.gui.login.UnsecureLoginAction"
 		nameVar="name" passwordVar="pass" />
-	
+
 	<ACTION name="wechseln" class="org.janus.gui.page.ChangePageAction"
 		pagename="data" />
-	
+
+	<ACTION name="zurTabelle" class="org.janus.gui.page.ChangePageAction"
+		pagename="TablePage" />
+
 	<ACTION name="anmeldenUndwechseln" actions="anmelden,wechseln" />
-	
+	<ACTION name="anmeldenUndzurTabelle" actions="anmelden,zurTabelle" />
+
 	<GUI>
 
 		<VBOX>
@@ -28,6 +39,12 @@
 
 			</HBOX>
 			<BUTTON name="anmeldenUndwechseln" text="Anmelden" />
+			<BUTTON name="anmeldenUndzurTabelle" text="zur Tabelle" />
+
+			<SHOWTABLE name="tabelle">
+				<COLUMN name="value" header="Wert" />
+				<COLUMN name="text" header="Text" />
+			</SHOWTABLE>
 
 		</VBOX>
 

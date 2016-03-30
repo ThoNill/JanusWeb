@@ -47,5 +47,10 @@ public class ChangeKey implements Serializable{
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "ChangeKey [id=" + id + ", field=" + field + "]";
+	}
+
 
 }

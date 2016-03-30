@@ -14,10 +14,5 @@ public class JavaColor2HTMLColor {
 	}
 	
 	
-	
-/*	
-	public static void main(String args[]) {
-		System.out.println(transform(Color.blue));
-	}
-	*/
+
 }

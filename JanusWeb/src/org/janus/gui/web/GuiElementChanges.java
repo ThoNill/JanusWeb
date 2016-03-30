@@ -18,7 +18,7 @@ public class GuiElementChanges implements Serializable{
 	
 	public void add(ChangeOfGuiElement change) {
 		changeLog.add(change);
-		aktualValues.put(change.getKey(), change);
+		aktualValues.put(change.getKey(), change.getNewValue());
 	}
 
 

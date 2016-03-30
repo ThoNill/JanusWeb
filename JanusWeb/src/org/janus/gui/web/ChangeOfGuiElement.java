@@ -36,5 +36,11 @@ public class ChangeOfGuiElement implements Serializable{
 		return newValue;
 	}
 
+	@Override
+	public String toString() {
+		return "ChangeOfGuiElement [key=" + key + ", oldValue=" + oldValue
+				+ ", newValue=" + newValue + "]";
+	}
+
 
 }
