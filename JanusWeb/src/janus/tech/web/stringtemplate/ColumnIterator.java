@@ -1,6 +1,7 @@
 package janus.tech.web.stringtemplate;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import javax.swing.table.TableModel;
 
@@ -25,7 +26,7 @@ public class ColumnIterator implements Iterator<Object> {
 			col ++;
 			return m.getValueAt(row,col);
 		}	
-		return null;
+		 throw new NoSuchElementException();
 	}
 
 	@Override

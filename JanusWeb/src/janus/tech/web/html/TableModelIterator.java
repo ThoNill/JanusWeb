@@ -1,6 +1,7 @@
 package janus.tech.web.html;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.janus.table.ExtendedTableModel;
 
@@ -21,7 +22,7 @@ public class TableModelIterator implements Iterator<IndexAndTextItem> {
 	@Override
 	public IndexAndTextItem next() {
 		if (!hasNext()) {
-			return null;
+		    throw new NoSuchElementException();
 		};
 		IndexAndTextItem item = new IndexAndTextItem(index,model.getValueAt(index, 1).toString(),index== model.getCurrentRow());
 		index++;

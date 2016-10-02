@@ -6,6 +6,7 @@ import janus.tech.wcomponents.WFrame;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusApplication;
 import org.janus.gui.basis.JanusPage;
@@ -14,9 +15,8 @@ import org.janus.gui.web.PrototypeGuiComponent;
 import org.janus.gui.web.WebGuiContext;
 
 public class HtmlSession extends JanusSession {
-	/**
-	 * 
-	 */
+    private static final Logger LOG = Logger.getLogger(HtmlSession.class);
+
 	private static final long serialVersionUID = 923212941956452478L;
 
 	static final String SESSIONREF = "org.janus.session";
@@ -51,7 +51,8 @@ public class HtmlSession extends JanusSession {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				LOG.error("Fehler",e);
+				Thread.currentThread().interrupt();
 			}
 			hSession = request.getSession(true);
 		}

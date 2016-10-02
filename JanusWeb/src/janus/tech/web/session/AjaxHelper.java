@@ -3,14 +3,18 @@ package janus.tech.web.session;
 import janus.tech.wcomponents.WTable;
 
 
+
 import java.io.PrintWriter;
 import java.util.List;
+
 import javax.swing.table.TableModel;
+
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusApplication;
 import org.janus.gui.basis.JanusPage;
 import org.janus.gui.web.ChangeOfGuiElement;
 import org.janus.gui.web.GuiOutputCreator;
+import org.janus.gui.web.WebGuiComponent;
 import org.janus.gui.web.WebGuiContext;
 
 public class AjaxHelper extends GuiOutputCreator<PrintWriter> {
@@ -112,19 +116,19 @@ public class AjaxHelper extends GuiOutputCreator<PrintWriter> {
 	}
 
 	@Override
-	protected void post(GuiComponent comp,WebGuiContext context,  PrintWriter out) {
+	protected void post(WebGuiComponent comp,WebGuiContext context,  PrintWriter out) {
 		
 
 	}
 
 	@Override
-	protected void postChild(GuiComponent c, WebGuiContext context, PrintWriter out) {
+	protected void postChild(WebGuiComponent c, WebGuiContext context, PrintWriter out) {
 		
 
 	}
 
 	@Override
-	protected void pre(GuiComponent comp,WebGuiContext context,  PrintWriter out) {
+	protected void pre(WebGuiComponent comp,WebGuiContext context,  PrintWriter out) {
 		Object model = comp.getGuiValue();
 		if (model instanceof TableModel && comp instanceof WTable) {
 			printTable(out, (TableModel) model);
@@ -134,13 +138,13 @@ public class AjaxHelper extends GuiOutputCreator<PrintWriter> {
 	}
 
 	@Override
-	protected void preAllChilds(GuiComponent comp, WebGuiContext context, PrintWriter out) {
+	protected void preAllChilds(WebGuiComponent comp, WebGuiContext context, PrintWriter out) {
 		
 
 	}
 
 	@Override
-	protected void preChild(GuiComponent comp, WebGuiContext context,  PrintWriter out) {
+	protected void preChild(WebGuiComponent comp, WebGuiContext context,  PrintWriter out) {
 		
 
 	}

@@ -8,12 +8,14 @@ import java.util.List;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
+import org.apache.log4j.Logger;
 import org.janus.data.DefaultClassFactory;
 import org.janus.gui.web.DefaultGuiComponent;
 import org.janus.gui.web.PrototypeGuiComponent;
 import org.janus.gui.web.WebGuiContext;
 
 public class TemplateGuiComponent extends DefaultGuiComponent {
+    private static final Logger LOG = Logger.getLogger(TemplateGuiComponent.class);
 
 
 	static private StringTemplateGroup group = null;
@@ -43,7 +45,7 @@ public class TemplateGuiComponent extends DefaultGuiComponent {
 		this.inBoxOfType = inBoxOfType;
 	}
 
-	StringTemplateGroup getGroup() {
+	public static StringTemplateGroup getGroup() {
 		if (group == null) {
 			Reader r = DefaultClassFactory.FACTORY
 					.getReader("templates/" + groupName + ".st");
@@ -82,7 +84,7 @@ public class TemplateGuiComponent extends DefaultGuiComponent {
 			t.setAttribute("it", this);
 			return t.toString();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			LOG.error("Fehler",ex);;
 		}
 		return "";
 	}
@@ -97,7 +99,7 @@ public class TemplateGuiComponent extends DefaultGuiComponent {
 			}
 		}
 		if (anz > 0) {
-			StringBuffer b = new StringBuffer(textfield.length() + anz);
+			StringBuilder b = new StringBuilder(textfield.length() + anz);
 			for (int i = 0; i < textfield.length(); i++) {
 				char c = textfield.charAt(i);
 				if (c == 'ä') {

@@ -23,7 +23,8 @@ import org.janus.gui.web.WebGuiContext;
 import org.janus.gui.web.WebGuiElementBuilder;
 
 public class JanusServlet extends HttpServlet {
-	Logger log = Logger.getLogger(JanusServlet.class);
+    private static final Logger LOG = Logger.getLogger(JanusServlet.class);
+
 
 	JanusApplication app;
 
@@ -38,7 +39,7 @@ public class JanusServlet extends HttpServlet {
 			String appname = getInitParameter("appname");
 			String pagelist = getInitParameter("pagelist");
 			if (appname == null || pagelist == null) {
-				log.error("Bitte den Paramter 'appname' oder 'pagelist' anlegen");
+				LOG.error("Bitte den Paramter 'appname' oder 'pagelist' anlegen");
 			} else {
 				AppBuilder appBuilder = new AppBuilder(
 						new WebGuiElementBuilder());
@@ -46,7 +47,7 @@ public class JanusServlet extends HttpServlet {
 				app = appBuilder.getApplication(appname);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Fehler",e);;
 		}
 	}
 
@@ -82,7 +83,7 @@ public class JanusServlet extends HttpServlet {
 				respondToMessage(request, response, session, ajax);
 
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				LOG.error("Fehler",e1);;
 			}
 			session.setInactive();
 		}
@@ -147,7 +148,7 @@ public class JanusServlet extends HttpServlet {
 		if (parameterNames != null) {
 			while (ok && parameterNames.hasMoreElements()) {
 				String parameterName = parameterNames.nextElement();
-				ok = ok && checkParameterValue(request, parameterName);
+				ok = checkParameterValue(request, parameterName);
 			}
 		}
 		return ok;

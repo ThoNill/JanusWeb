@@ -4,7 +4,7 @@ package org.janus.gui.web;
 
 import java.util.List;
 
-import org.janus.gui.basis.GuiComponent;
+
 
 public abstract class GuiOutputCreator<K>  {
 
@@ -12,14 +12,14 @@ public abstract class GuiOutputCreator<K>  {
 
 	}
 
-	public void createOutput(GuiComponent connector, WebGuiContext context,
+	public void createOutput(WebGuiComponent connector, WebGuiContext context,
 			K out) {
-		GuiComponent comp = getGuiComponent(connector, context);
+		WebGuiComponent comp = getWebGuiComponent(connector, context);
 		pre(comp,context, out);
-		List<GuiComponent> connectors = connector.getChildComponents();
+		List<? extends WebGuiComponent> connectors = connector.getChildComponents();
 		if (connectors != null) {
 			preAllChilds(comp, context,out);
-			for (GuiComponent c : connectors) {
+			for (WebGuiComponent c : connectors) {
 				preChild(c,context, out);
 				createOutput(c, context, out);
 				postChild(c, context,out);
@@ -29,18 +29,18 @@ public abstract class GuiOutputCreator<K>  {
 		post(comp, context,out);
 	}
 
-	private GuiComponent getGuiComponent(GuiComponent connector,
+	private WebGuiComponent getWebGuiComponent(WebGuiComponent connector,
 			WebGuiContext context) {
 		return null;
 	}
 
-	protected abstract void postChild(GuiComponent c,WebGuiContext context, K out);
+	protected abstract void postChild(WebGuiComponent c,WebGuiContext context, K out);
 
-	protected abstract void preChild(GuiComponent c,WebGuiContext context, K out);
+	protected abstract void preChild(WebGuiComponent c,WebGuiContext context, K out);
 
-	protected abstract void preAllChilds(GuiComponent comp,WebGuiContext context, K out);
+	protected abstract void preAllChilds(WebGuiComponent comp,WebGuiContext context, K out);
 
-	protected abstract void post(GuiComponent comp,WebGuiContext context, K out);
+	protected abstract void post(WebGuiComponent comp,WebGuiContext context, K out);
 
-	protected abstract void pre(GuiComponent comp,WebGuiContext context, K out);
+	protected abstract void pre(WebGuiComponent comp,WebGuiContext context, K out);
 }

@@ -1,6 +1,7 @@
 package janus.tech.web.stringtemplate;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.janus.table.ExtendedTableModel;
 
@@ -24,7 +25,7 @@ public class RowIterator implements Iterator<ColumnIterator> {
 			row ++;
 			return new ColumnIterator(m,row);
 		}	
-		return null;
+		 throw new NoSuchElementException();
 	}
 
 	@Override

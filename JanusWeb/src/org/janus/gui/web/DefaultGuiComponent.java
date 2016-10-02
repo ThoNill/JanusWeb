@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Vector;
+import java.util.List; import java.util.ArrayList;
 
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.enums.GuiField;
@@ -23,12 +23,12 @@ import org.janus.gui.enums.GuiType;
  * 
  */
 
-public class DefaultGuiComponent implements GuiComponent,Serializable {
+public class DefaultGuiComponent implements WebGuiComponent {
 
 	private static final long serialVersionUID = 4874068929136734100L;
 	private WebGuiContext context;
 	private PrototypeGuiComponent prototyp;
-	protected List<GuiComponent> children = new Vector<GuiComponent>();
+	protected List<WebGuiComponent> children = new ArrayList<>();
 	
 	
 	public DefaultGuiComponent(WebGuiContext context,
@@ -241,11 +241,15 @@ public class DefaultGuiComponent implements GuiComponent,Serializable {
 
 	@Override
 	public void addComponent(GuiComponent comp) {
-		children.add(comp);
+	    if (comp instanceof WebGuiComponent) {
+	        children.add((WebGuiComponent)comp);
+	    } else {
+	        throw new IllegalArgumentException("Keine WebGuiComponente uebergeben");
+	    }
 	}
 
 	@Override
-	public List<GuiComponent> getChildComponents() {
+	public List<WebGuiComponent> getChildComponents() {
 		return children;
 	}
 

@@ -1,6 +1,6 @@
 package janus.tech.web.html;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.janus.gui.basis.JanusPage;
@@ -9,10 +9,10 @@ import org.janus.gui.web.PrototypeGuiComponent;
 public class GuiComponentVerwalter {
 	private static GuiComponentVerwalter singletonVerwalter = new GuiComponentVerwalter();
 
-	private Hashtable<Integer, PrototypeGuiComponent> connectors = null;
+	private HashMap<Integer, PrototypeGuiComponent> connectors = null;
 
 	private GuiComponentVerwalter() {
-		connectors = new Hashtable<Integer,PrototypeGuiComponent>();
+		connectors = new HashMap<Integer,PrototypeGuiComponent>();
 	}
 
 	public void add(PrototypeGuiComponent connector) {

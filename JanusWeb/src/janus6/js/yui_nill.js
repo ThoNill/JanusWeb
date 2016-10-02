@@ -45,7 +45,7 @@ try {
 	}
 
 	setterRADIO = function(node, prop, value, pos) {
-		if (prop == "value" || prop == "currentrow") {
+		if (prop === "value" || prop === "currentrow") {
 			var rnode = node.one('input[checked="checked"]');
 			infomsg("finde 1 " + rnode);
 			if (rnode) {
@@ -63,8 +63,8 @@ try {
 	}
 
 	setterCHECK = function(node, prop, value, pos) {
-		if (prop == "value") {
-			if (value == "true") {
+		if (prop === "value") {
+			if (value === "true") {
 				node.set("checked", "checked");
 			} else {
 				node.set("checked", "");
@@ -77,7 +77,7 @@ try {
 	}
 
 	setterLIST = function(node, prop, value, pos) {
-		if (prop == "value" || prop == "currentrow") {
+		if (prop === "value" || prop === "currentrow") {
 			infomsg("setze Wert auf " + value);
 			node.set("value", value);
 		} else {
@@ -87,7 +87,7 @@ try {
 	
 	setterTABS = function(node, prop, value, pos) {
 		infomsg("setter TABS");
-		if (prop == "value" || prop == "currentrow") {
+		if (prop === "value" || prop === "currentrow") {
 			infomsg("setze TAB Wert auf " + value);
 			infomsg("TAB Wert auf " + node);
 			try {
@@ -107,25 +107,25 @@ try {
 
 	setterSTANDARD = function(node, prop, value, pos) {
 		infomsg("setze Wert " + prop + " auf " + value);
-		if (prop == "focus") {
+		if (prop === "focus") {
 			node.focus();
 		}
-		if (prop == "value") {
+		if (prop === "value") {
 			infomsg("setze Wert auf " + value);
 			node.set("value", value);
 		}
-		if (prop == "enabled") {
+		if (prop === "enabled") {
 			infomsg("setze Wert auf " + value);
-			if (value == "true") {
+			if (value === "true") {
 				node.set("disabled", "");
 			} else {
 				node.set("disabled", "disabled");
 			}
 		}
-		if (prop == "visible") {
+		if (prop === "visible") {
 			infomsg("setze Sichtbarkeit auf " + value);
 	//		node.set("visible",value);
-			if (value == "true") {
+			if (value === "true") {
 				node.setStyle("visibility", "visible");
 			} else {
 	//			node.set("display", "none");
@@ -133,7 +133,7 @@ try {
 			}
 
 		}
-		if (prop == "style") {
+		if (prop === "style") {
 			infomsg1("setze Style Wert auf " + value);
 			try {
 				node.setStyles( value);
@@ -144,7 +144,7 @@ try {
 	}
 
 	setterLABEL = function(node, prop, value, pos) {
-		if (prop == "label") {
+		if (prop === "label") {
 			infomsg("setze LABEL auf " + value);
 			node.setHTML(value);
 		} else {
@@ -153,7 +153,7 @@ try {
 	}
 
 	setterGUI = function(node, prop, value, pos) {
-		if (prop == "label") {
+		if (prop === "label") {
 			infomsg("setze GUI auf " + value);
 			document.title = value;
 		} else {
@@ -162,7 +162,7 @@ try {
 	}
 
 	setterSHOWTABLE = function(node, prop, value, table) {
-		if (prop == "value") {
+		if (prop === "value") {
 			try {
 				table.set("data", value.data);
 				table.set('selectedRow',0);
@@ -170,7 +170,7 @@ try {
 				infomsg(e);
 			};
 		} else {	
-			if (prop == "currentrow") {
+			if (prop === "currentrow") {
 				table.set('selectedRow', value);
 			} else {
 				setterSTANDARD(node, prop, value);
@@ -226,6 +226,6 @@ try {
 	Y.log("Stoppe das laden", '#info');
 
 } catch (ex) {
-	alert(ex);
+	Y.log("SFehler", '#error');
 };
-// alert("ende laden");
+

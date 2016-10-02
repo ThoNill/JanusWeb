@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -24,7 +25,7 @@ import com.meterware.servletunit.ServletUnitClient;
 
 
 public class WebServletTest implements HTMLParserListener{
-
+    private static final Logger LOG = Logger.getLogger(WebServletTest.class);
 
 
 	
@@ -70,7 +71,7 @@ public class WebServletTest implements HTMLParserListener{
 			listDivs(doc,"BUTTON");
 		
 		} catch (Exception e) {
-				e.printStackTrace();
+				LOG.error("Fehler",e);;
 		}
 	}
 

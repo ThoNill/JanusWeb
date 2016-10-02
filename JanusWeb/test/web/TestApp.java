@@ -3,6 +3,8 @@ package web;
 import janus.tech.wcomponents.FromPrototypToTemplateComponents;
 import janus.tech.wcomponents.TemplateGuiComponent;
 import janus.tech.web.session.HtmlSession;
+
+import org.apache.log4j.Logger;
 import org.janus.appbuilder.AppBuilder;
 import org.janus.gui.basis.JanusApplication;
 import org.janus.gui.basis.JanusPage;
@@ -13,6 +15,7 @@ import org.janus.gui.web.WebGuiElementBuilder;
 import org.junit.Assert;
 
 public class TestApp {
+    private static final Logger LOG = Logger.getLogger(TestApp.class);
 
 	public TestApp() {
 		// TODO Auto-generated constructor stub
@@ -38,7 +41,7 @@ public class TestApp {
 			String text = gui.renderHtml();
 			System.out.print(text);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Fehler",e);;
 			Assert.fail("Exception " + e.getMessage());
 		}
 	}	

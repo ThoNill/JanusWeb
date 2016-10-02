@@ -1,7 +1,6 @@
 package web;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 
 import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.WebConversation;
@@ -19,6 +19,7 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
 
 public class YUIServlet extends HttpServlet {
+    private static final Logger LOG = Logger.getLogger(YUIServlet.class);
 	static String text = "";
 	static String contentType = "application/javascript";
 	static String charSet = "utf-8";
@@ -30,10 +31,12 @@ public class YUIServlet extends HttpServlet {
 				int s = (int)f.length();
 				byte is[]  = new byte[s];
 				FileInputStream in = new FileInputStream(f);
-				in.read(is);
+				int sRead = in.read(is);
 				in.close();
 				text = new String(is);
-				
+				if (s != sRead) {
+				    throw new IOException("Anzahl der gelesenen Bytes != Dateigroesse");
+				}
 			} else {
 
 				WebConversation wc = new WebConversation();
@@ -51,7 +54,7 @@ public class YUIServlet extends HttpServlet {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Fehler",e);;
 		}
 	}
 
@@ -79,7 +82,7 @@ public class YUIServlet extends HttpServlet {
 			out.print(text);
 			out.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("Fehler",e);;
 		}
 	}
 

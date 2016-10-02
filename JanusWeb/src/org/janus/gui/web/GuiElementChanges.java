@@ -5,12 +5,12 @@ package org.janus.gui.web;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
+import java.util.List; import java.util.ArrayList;
 
 public class GuiElementChanges implements Serializable{
 	
-	Vector<ChangeOfGuiElement> changeLog = new Vector<>();
-	HashMap<ChangeKey,Serializable> aktualValues = new HashMap<>();
+	private List<ChangeOfGuiElement> changeLog = new ArrayList<>();
+	private HashMap<ChangeKey,Serializable> aktualValues = new HashMap<>();
 
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class GuiElementChanges implements Serializable{
 	}
 	
 	public void clearChangeLog() {
-		changeLog.removeAllElements();
+		changeLog.clear();
 	}
 	
 	public Serializable getValue(ChangeKey key) {

@@ -2,6 +2,8 @@ package org.janus.gui.web;
 
 import janus.tech.web.html.GuiComponentVerwalter;
 
+
+import org.apache.log4j.Logger;
 import org.janus.actions.Action;
 import org.janus.dict.actions.ActionDictionary;
 import org.janus.dict.actions.NamedActionValue;
@@ -15,7 +17,9 @@ import org.janus.gui.enums.GuiType;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+
 public class WebGuiElementBuilder implements GuiElementBuilder {
+    private static final Logger LOG = Logger.getLogger(WebGuiElementBuilder.class);
 
 	public WebGuiElementBuilder() {
 		super();
@@ -38,7 +42,7 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 				GuiField field = GuiField.valueOf(attr.getName().toUpperCase());
 				Attribut2GuiComponent.setField(comp, field, attr.getValue());
 			} catch (Exception ex) {
-
+			    LOG.error("Attribut kann nicht gesetzt weden",ex);
 			}
 		}
 		if (comp.isTable()) {
