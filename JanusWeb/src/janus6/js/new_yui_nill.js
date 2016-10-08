@@ -7,12 +7,12 @@ mylogger = new Y.Console( {
 einPropChangeEventAbarbeiten = function(data) {
 	var node = Y.one(data.div);
 	if (node) {
-		if (data.prop == "value") {
+		if (data.prop === "value") {
 			infomsg("setze " + data.div + " auf " + data.newvalue);
 			node.set("value", data.newvalue);
 		}
 		;
-		if (data.prop == "label") {
+		if (data.prop === "label") {
 			infomsg("setze " + data.div + " auf " + data.newvalue);
 			node.set("title", data.newvalue);
 		}
