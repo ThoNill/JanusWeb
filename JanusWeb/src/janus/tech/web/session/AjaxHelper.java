@@ -2,8 +2,6 @@ package janus.tech.web.session;
 
 import janus.tech.wcomponents.WTable;
 
-
-
 import java.io.PrintWriter;
 import java.util.List;
 

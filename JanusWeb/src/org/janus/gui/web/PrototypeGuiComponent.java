@@ -3,11 +3,10 @@ package org.janus.gui.web;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

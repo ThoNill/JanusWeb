@@ -11,7 +11,7 @@ public class WCheck extends WStandard {
 	public WCheck(WebGuiContext context, PrototypeGuiComponent prototyp,
 			float width, float height) {
 		super(context, prototyp, width, height);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public boolean isSelected() {

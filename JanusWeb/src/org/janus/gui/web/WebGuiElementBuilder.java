@@ -2,7 +2,6 @@ package org.janus.gui.web;
 
 import janus.tech.web.html.GuiComponentVerwalter;
 
-
 import org.apache.log4j.Logger;
 import org.janus.actions.Action;
 import org.janus.dict.actions.ActionDictionary;

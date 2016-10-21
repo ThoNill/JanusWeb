@@ -1,15 +1,14 @@
 package web;
 
-import java.io.File;
-
-
 import janus.tech.web.session.JanusServlet;
 
+import java.io.File;
+
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.servlet.DefaultServlet;
 
 
 public class JettyStarter{

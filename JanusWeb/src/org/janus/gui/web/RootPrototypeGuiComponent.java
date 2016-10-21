@@ -1,6 +1,7 @@
 package org.janus.gui.web;
 
 import java.util.List;
+
 import org.janus.gui.basis.GuiComponent;
 import org.janus.gui.basis.JanusPage;
 import org.janus.gui.basis.RootGuiComponent;
@@ -18,7 +19,7 @@ public class RootPrototypeGuiComponent extends PrototypeGuiComponent implements 
 
 	public RootPrototypeGuiComponent(GuiType type, JanusPage page) {
 		super(type, page);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override

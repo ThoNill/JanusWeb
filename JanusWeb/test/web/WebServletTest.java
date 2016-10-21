@@ -95,7 +95,7 @@ public class WebServletTest implements HTMLParserListener{
 
 	@Override
 	public void warning(URL url, String msg, int line, int column) {
-		// TODO Auto-generated method stub
+		
 		System.out.println(msg);
 	}
 

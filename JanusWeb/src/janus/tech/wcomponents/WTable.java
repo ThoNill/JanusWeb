@@ -1,11 +1,6 @@
 package janus.tech.wcomponents;
 
 import janus.tech.web.html.TableModelIterator;
-
-
-
-
-
 import janus.tech.web.session.AjaxHelper;
 
 import java.io.ByteArrayOutputStream;
