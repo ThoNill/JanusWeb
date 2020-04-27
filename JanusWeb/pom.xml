@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>thomas.nill</groupId>
@@ -52,19 +53,19 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>9.4.17.v20190418</version>
+			<version>9.4.28.v20200408</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
-			<version>9.3.0.M2</version>
+			<version>9.4.28.v20200408</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
-			<version>9.3.0.M2</version>
+			<version>9.4.28.v20200408</version>
 		</dependency>
 
 
@@ -74,6 +75,19 @@
 			<version>3.0-alpha-1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>14</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>thomas.nill</groupId>
@@ -103,7 +117,8 @@
 	</dependencies>
 
 	<build>
-		<defaultGoal>jetty:run</defaultGoal>
+
+		<defaultGoal>javafx:run</defaultGoal>
 		<sourceDirectory>src</sourceDirectory>
 
 		<resources>
@@ -129,11 +144,20 @@
 
 		<plugins>
 			<plugin>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>0.0.4</version>
+				<configuration>
+					<mainClass>web.ShowTheWeb</mainClass>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 					<encoding>ISO-8859-1</encoding>
 				</configuration>
 			</plugin>
@@ -150,7 +174,8 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		
+
 		</plugins>
 	</build>
 </project>
+
