@@ -40,7 +40,7 @@ public class WebServletTest implements HTMLParserListener{
      		YUIServlet.initStatic();
 	
 		
-			ServletRunner sr = new ServletRunner(new File("test/web.xml"));
+			ServletRunner sr = new ServletRunner(new File("src/main/webapp/WEB-INF/web.xml"));
 			
 			
 			
