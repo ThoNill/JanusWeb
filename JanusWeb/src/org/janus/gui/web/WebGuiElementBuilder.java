@@ -16,17 +16,15 @@ import org.janus.gui.enums.GuiType;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
-
 public class WebGuiElementBuilder implements GuiElementBuilder {
-    private static final Logger LOG = Logger.getLogger(WebGuiElementBuilder.class);
+	private static final Logger LOG = Logger.getLogger(WebGuiElementBuilder.class);
 
 	public WebGuiElementBuilder() {
 		super();
 	}
 
 	@Override
-	public GuiComponent createGuiElement(Element elem, Action a,
-			ActionDictionary dict) {
+	public GuiComponent createGuiElement(Element elem, Action a, ActionDictionary dict) {
 		PrototypeGuiComponent comp = createGuiElementIntern(elem, a, dict);
 		String actionName = elem.getAttributeValue("name");
 		if (actionName != null) {
@@ -38,10 +36,13 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 		comp.setWidth(10.0f);
 		for (Attribute attr : elem.getAttributes()) {
 			try {
-				GuiField field = GuiField.valueOf(attr.getName().toUpperCase());
-				Attribut2GuiComponent.setField(comp, field, attr.getValue());
+				String upperName = attr.getName().toUpperCase();
+				if (!"NAME".equals(upperName)) {
+					GuiField field = GuiField.valueOf(attr.getName().toUpperCase());
+					Attribut2GuiComponent.setField(comp, field, attr.getValue());
+				}
 			} catch (Exception ex) {
-			    LOG.error("Attribut kann nicht gesetzt weden",ex);
+				LOG.error("Attribut kann nicht gesetzt weden", ex);
 			}
 		}
 		if (comp.isTable()) {
@@ -84,7 +85,7 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 		case RADIO:
 			break;
 		case SHOWTABLE:
-			addTableColumnDescriptions(elem,comp);
+			addTableColumnDescriptions(elem, comp);
 			break;
 		case TAB:
 			break;
@@ -94,7 +95,7 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 			break;
 		case TEXTFIELD:
 			comp.setLength(100);
-			comp.setPattern("^[0-9a-zäöüß \\.\\-\\,A-ZÄÖÜ]*$");
+			comp.setPattern("^[0-9a-zï¿½ï¿½ï¿½ï¿½ \\.\\-\\,A-Zï¿½ï¿½ï¿½]*$");
 			break;
 		case VBOX:
 			break;
@@ -105,26 +106,25 @@ public class WebGuiElementBuilder implements GuiElementBuilder {
 		return comp;
 	}
 
-	private void addTableColumnDescriptions(Element elem,
-			PrototypeGuiComponent comp) {
-		for( Element column : elem.getChildren()) {
+	private void addTableColumnDescriptions(Element elem, PrototypeGuiComponent comp) {
+		for (Element column : elem.getChildren()) {
 			if ("COLUMN".equals(column.getName().toUpperCase())) {
-				TableColumnDescription d = new TableColumnDescription(column.getAttributeValue("class"),column.getAttributeValue("header") ,column.getAttributeValue("name"));
+				TableColumnDescription d = new TableColumnDescription(column.getAttributeValue("class"),
+						column.getAttributeValue("header"), column.getAttributeValue("name"));
 				comp.addDescriptions(d);
 			}
-			
+
 		}
-		
+
 	}
 
-	private PrototypeGuiComponent createGuiElementIntern(Element elem,
-			Action a, ActionDictionary dict) {
+	private PrototypeGuiComponent createGuiElementIntern(Element elem, Action a, ActionDictionary dict) {
 		GuiType type = GuiType.valueOf(elem.getName());
 		if (type.equals(GuiType.GUI)) {
 			return new RootPrototypeGuiComponent(type, (JanusPage) dict);
 		}
 		if (type.equals(GuiType.SHOWTABLE)) {
-			
+
 		}
 		return new PrototypeGuiComponent(type, (JanusPage) dict);
 	}
